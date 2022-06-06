@@ -71,4 +71,20 @@ public class Sogeti : SogetiDriver
 
         driver.FindElement(By.XPath("//p[text()='Thank you for contacting us.']"));
     }
+
+    [Test]
+    public void Test3()
+    {
+        driver.FindElement(By.ClassName("acceptCookie")).Click();
+
+        driver.FindElement(By.XPath(".//*[@aria-controls='country-list-id']")).Click();
+
+        IList<IWebElement> countries = driver.FindElement(By.Id("country-list-id")).FindElements(By.TagName("li"));
+
+        foreach (var country in countries)
+        {
+            string url = country.FindElement(By.TagName("a")).GetAttribute("href");
+            Assert.That(TestUtilities.GetHttpStatus(url), Is.EqualTo("OK"));
+        }
+    }
 }

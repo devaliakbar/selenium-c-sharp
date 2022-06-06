@@ -1,4 +1,7 @@
-﻿using System.Text;
+﻿using System.Net;
+using System.Net.Security;
+using System.Security.Cryptography.X509Certificates;
+using System.Text;
 
 namespace SeleniumCSharp.Utilities
 {
@@ -26,6 +29,50 @@ namespace SeleniumCSharp.Utilities
         {
             int randomInt = _random.Next(1000);
             return "username" + randomInt + "@gmail.com";
+        }
+
+
+
+        public static string GetHttpStatus(string url)
+        {
+            try
+            {
+                initiateSSLTrust();
+
+                HttpWebRequest webReq;
+                webReq = (HttpWebRequest)WebRequest.Create(url);
+                webReq.UseDefaultCredentials = true;
+                webReq.UserAgent = "Link Checker";
+                webReq.Proxy.Credentials = System.Net.CredentialCache.DefaultCredentials;
+                HttpWebResponse response = (HttpWebResponse)webReq.GetResponse();
+
+                return response.StatusCode.ToString();
+
+            }
+
+            catch (Exception e)
+            {
+                return e.Message;
+            }
+
+        }
+
+
+        private static void initiateSSLTrust()
+        {
+            try
+            {
+                ServicePointManager.ServerCertificateValidationCallback =
+                    new RemoteCertificateValidationCallback(
+                        delegate (object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors errors)
+                        {
+                            return true;
+                        });
+            }
+            catch (Exception)
+            {
+                // ActivityLog.InsertSyncActivity(ex);
+            }
         }
     }
 }

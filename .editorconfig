@@ -1,0 +1,4 @@
+﻿[*.cs]
+
+# CA5359: Do Not Disable Certificate Validation
+dotnet_diagnostic.CA5359.severity = none

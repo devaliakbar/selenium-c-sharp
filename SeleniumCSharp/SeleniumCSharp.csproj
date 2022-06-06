@@ -38,4 +38,7 @@
     <Folder Include="PageObjects\Sogeti\" />
     <Folder Include="Utilities\" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="..\.editorconfig" />
+  </ItemGroup>
 </Project>
