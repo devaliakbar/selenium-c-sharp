@@ -1,89 +1,78 @@
-﻿
-using OpenQA.Selenium;
-using OpenQA.Selenium.Interactions;
-using OpenQA.Selenium.Support.UI;
-using SeleniumCSharp.TestScripts.Sogeti;
+﻿using SeleniumCSharp.TestScripts.Sogeti;
 using SeleniumCSharp.Utilities;
+using SeleniumCSharp.PageObjects.Sogeti;
 
 namespace SeleniumCSharp;
 
 public class Sogeti : SogetiDriver
 {
     [Test]
+    [Author("Ali Akbar", "officialakbarali@gmail.com")]
+    [Category("UI Testing")]
+    [Description("After selecting 'Automation' option from menu, verify that the Services and Automation are selected, verify 'Automation' page is displayed,  and “Automation” text is visible in Page.")]
     public void Test1()
     {
-        driver.FindElement(By.ClassName("acceptCookie")).Click();
+        var homePage = new Home(driver);
+        homePage.AcceptCookies();
 
-        var element = driver.FindElement(By.ClassName("level2"));
-        new Actions(driver).MoveToElement(element).Perform();
+        homePage.HoverServiceMenu();
 
-        driver.FindElement(By.XPath("//a[text()='Automation' and @class='subMenuLink']")).Click();
+        var automationPage = homePage.GoToAutomationPage();
 
-        //Verifying successfully naviagted to automation page
+        //Verifying that successfully naviagated to 'Automation' page
         Assert.That(driver.Url, Is.EqualTo("https://www.sogeti.com/services/automation/"));
 
+        //Verifying 'Automation' title is exist
+        var _ = automationPage.AutomationText;
 
         const string selectedTextColor = "rgba(255, 48, 76, 1)";
 
-        //Verifying Service is selected by checking it's color
-        var serviceText = driver.FindElement(By.XPath("//span[text()='Services']"));
-        Assert.That(serviceText.GetCssValue("color"), Is.EqualTo(selectedTextColor));
+        //Verifying 'Service' is selected by checking it's color
+        Assert.That(automationPage.GetServiceMenuColor(), Is.EqualTo(selectedTextColor));
 
-        new Actions(driver).MoveToElement(serviceText).Perform();
+        automationPage.HoverServiceMenu();
 
-        //Verifying Automation is selected by checking it's color
-        var automationText = driver.FindElement(By.XPath("//a[text()='Automation' and @class='subMenuLink']"));
-        Assert.That(automationText.GetCssValue("color"), Is.EqualTo(selectedTextColor));
+        //Verifying 'Automation' is selected by checking it's color
+        Assert.That(automationPage.GetAutomationMenuColor(), Is.EqualTo(selectedTextColor));
     }
 
     [Test]
+    [Author("Ali Akbar", "officialakbarali@gmail.com")]
+    [Category("UI Testing")]
+    [Description("On Automation Page, fill and submit 'Contact us' Form.")]
     public void Test2()
     {
-        driver.FindElement(By.ClassName("acceptCookie")).Click();
+        var homePage = new Home(driver);
+        homePage.AcceptCookies();
 
-        var element = driver.FindElement(By.ClassName("level2"));
-        new Actions(driver).MoveToElement(element).Perform();
+        homePage.HoverServiceMenu();
 
-        driver.FindElement(By.XPath("//a[text()='Automation' and @class='subMenuLink']")).Click();
+        var automationPage = homePage.GoToAutomationPage();
+        automationPage.FillForm();
 
-        driver.FindElement(By.Id("4ff2ed4d-4861-4914-86eb-87dfa65876d8")).SendKeys(TestUtilities.GenerateRandomString());
-
-        driver.FindElement(By.Id("11ce8b49-5298-491a-aebe-d0900d6f49a7")).SendKeys(TestUtilities.GenerateRandomString());
-
-        driver.FindElement(By.Id("056d8435-4d06-44f3-896a-d7b0bf4d37b2")).SendKeys(TestUtilities.GenerateRandomEmail());
-
-        driver.FindElement(By.Id("755aa064-7be2-432b-b8a2-805b5f4f9384")).SendKeys(TestUtilities.GenerateRandomString());
-
-        driver.FindElement(By.Id("703dedb1-a413-4e71-9785-586d609def60")).SendKeys(TestUtilities.GenerateRandomString());
-
-        new SelectElement(driver.FindElement(By.Id("e74d82fb-949d-40e5-8fd2-4a876319c45a"))).SelectByValue("Germany");
-
-        driver.FindElement(By.Id("88459d00-b812-459a-99e4-5dc6eff2aa19")).SendKeys(TestUtilities.GenerateRandomString());
-
-        driver.FindElement(By.XPath("//label[@for='__field_1239350']")).Click();
-
-        // Here captcha need to solve manually within 10 seconds
-        // driver.FindElement(By.XPath(".//*[@class='rc-anchor-content']")).Click();
+        // Captcha need to solve manually within 10 seconds
         Thread.Sleep(TimeSpan.FromSeconds(10));
 
-        driver.FindElement(By.Id("b35711ee-b569-48b4-8ec4-6476dbf61ef8")).Click();
+        automationPage.SubmitForm();
 
-
-        driver.FindElement(By.XPath("//p[text()='Thank you for contacting us.']"));
+        //Verifying Thank you message
+        var _ = automationPage.ThankYouMsg;
     }
 
     [Test]
+    [Author("Ali Akbar", "officialakbarali@gmail.com")]
+    [Category("UI Testing")]
+    [Description("Verify all country link in worldwide dropdown are working.")]
     public void Test3()
     {
-        driver.FindElement(By.ClassName("acceptCookie")).Click();
+        var homePage = new Home(driver);
+        homePage.AcceptCookies();
 
-        driver.FindElement(By.XPath(".//*[@aria-controls='country-list-id']")).Click();
+        homePage.SelectWorldwide();
 
-        IList<IWebElement> countries = driver.FindElement(By.Id("country-list-id")).FindElements(By.TagName("li"));
-
-        foreach (var country in countries)
+        var countryUrlsv = homePage.GetCountryUrls();
+        foreach (var url in countryUrlsv)
         {
-            string url = country.FindElement(By.TagName("a")).GetAttribute("href");
             Assert.That(TestUtilities.GetHttpStatus(url), Is.EqualTo("OK"));
         }
     }

@@ -18,6 +18,8 @@
     <PackageReference Include="Selenium.Support" Version="4.2.0" />
     <PackageReference Include="Selenium.WebDriver.ChromeDriver" Version="102.0.5005.6102" />
     <PackageReference Include="ExtentReports" Version="4.1.0" />
+    <PackageReference Include="DotNetSeleniumExtras.PageObjects" Version="3.11.0" />
+    <PackageReference Include="DotNetSeleniumExtras.PageObjects.Core" Version="4.0.1" />
   </ItemGroup>
 
   <ItemGroup>
@@ -30,6 +32,8 @@
     <None Remove="PageObjects\" />
     <None Remove="PageObjects\Sogeti\" />
     <None Remove="Utilities\" />
+    <None Remove="DotNetSeleniumExtras.PageObjects" />
+    <None Remove="DotNetSeleniumExtras.PageObjects.Core" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="TestScripts\" />

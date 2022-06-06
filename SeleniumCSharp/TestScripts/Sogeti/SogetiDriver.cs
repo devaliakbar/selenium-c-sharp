@@ -11,8 +11,10 @@ namespace SeleniumCSharp.TestScripts.Sogeti
         [SetUp]
         public void Open()
         {
-            driver = new ChromeDriver();
-            driver.Url = "https://www.sogeti.com/";
+            driver = new ChromeDriver
+            {
+                Url = "https://www.sogeti.com/"
+            };
         }
 
         [TearDown]
