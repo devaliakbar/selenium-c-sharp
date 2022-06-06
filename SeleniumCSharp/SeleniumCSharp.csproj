@@ -29,11 +29,13 @@
     <None Remove="TestScripts\Sogeti\" />
     <None Remove="PageObjects\" />
     <None Remove="PageObjects\Sogeti\" />
+    <None Remove="Utilities\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="TestScripts\" />
     <Folder Include="TestScripts\Sogeti\" />
     <Folder Include="PageObjects\" />
     <Folder Include="PageObjects\Sogeti\" />
+    <Folder Include="Utilities\" />
   </ItemGroup>
 </Project>
