@@ -20,6 +20,7 @@
     <PackageReference Include="ExtentReports" Version="4.1.0" />
     <PackageReference Include="DotNetSeleniumExtras.PageObjects" Version="3.11.0" />
     <PackageReference Include="DotNetSeleniumExtras.PageObjects.Core" Version="4.0.1" />
+    <PackageReference Include="RestSharp" Version="108.0.1" />
   </ItemGroup>
 
   <ItemGroup>
@@ -34,6 +35,10 @@
     <None Remove="Utilities\" />
     <None Remove="DotNetSeleniumExtras.PageObjects" />
     <None Remove="DotNetSeleniumExtras.PageObjects.Core" />
+    <None Remove="TestScripts\Zippopotam\" />
+    <None Remove="RestClient" />
+    <None Remove="RestSharp" />
+    <None Remove="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="TestScripts\" />
@@ -41,6 +46,8 @@
     <Folder Include="PageObjects\" />
     <Folder Include="PageObjects\Sogeti\" />
     <Folder Include="Utilities\" />
+    <Folder Include="TestScripts\Zippopotam\" />
+    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\.editorconfig" />
