@@ -25,11 +25,11 @@ namespace SeleniumCSharp.TestScripts.Zippopotam
             Assert.That(result, Is.Not.EqualTo(null));
         }
 
+        [Author("Ali Akbar", "officialakbarali@gmail.com")]
+        [Category("API Testing")]
         [TestCase("us", "90210", "Beverly Hills")]
         [TestCase("us", "12345", "Schenectady")]
         [TestCase("ca", "B2R", "Waverley")]
-        [Author("Ali Akbar", "officialakbarali@gmail.com")]
-        [Category("API Testing")]
         public void Test2(string country, string postalCode, string placeName)
         {
             PlaceModel place = GetPlace($"{country}/{postalCode}");
