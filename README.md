@@ -8,3 +8,4 @@
 - DotNetSeleniumExtras.PageObjects
 - DotNetSeleniumExtras.PageObjects.Core
 - ExtentReports
+- RestSharp
